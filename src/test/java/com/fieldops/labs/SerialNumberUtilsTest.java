@@ -35,4 +35,24 @@ class SerialNumberUtilsTest {
         assertEquals(expectedSerials, serialsWithoutDuplicates);
     }
 
+    @Test
+    void shouldRemoveMultipleDuplicatesAndPreserveOrder() {
+        List<String> serials = List.of("EQ-003",
+                "EQ-001",
+                "EQ-003",
+                "EQ-002",
+                "EQ-001",
+                "EQ-004",
+                "EQ-002");
+        List<String> serialsWithoutDuplicates = SerialNumberUtils.removeDuplicates(serials);
+        List<String> expectedSerials = List.of(
+                "EQ-003",
+                "EQ-001",
+                "EQ-002",
+                "EQ-004");
+
+        assertEquals(expectedSerials, serialsWithoutDuplicates);
+
+    }
+
 }
