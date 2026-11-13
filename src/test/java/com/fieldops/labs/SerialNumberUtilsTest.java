@@ -55,4 +55,23 @@ class SerialNumberUtilsTest {
 
     }
 
+    @Test
+    void shouldPreserveFirstSerialNumberAndKeepOrder() {
+        List<String> original = List.of(
+                "EQ-A",
+                "EQ-B",
+                "EQ-C",
+                "EQ-B",
+                "EQ-E",
+                "EQ-B");
+        List<String> serialsWithoutDuplicates = SerialNumberUtils.removeDuplicates(original);
+        List<String> expected = List.of(
+                "EQ-A",
+                "EQ-B",
+                "EQ-C",
+                "EQ-E");
+
+        assertEquals(expected, serialsWithoutDuplicates);
+    }
+
 }
