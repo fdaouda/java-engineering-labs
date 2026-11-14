@@ -1,6 +1,5 @@
 package com.fieldops.labs;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,12 +7,13 @@ import java.util.Set;
 class SerialNumberUtils {
 
     public static List<String> removeDuplicates(List<String> serials) {
-        Set<String> listWithoutDuplicates = new LinkedHashSet<>();
+        Set<String> serialsWithoutDuplicates = new LinkedHashSet<>();
+        List<String> result = List.copyOf(serialsWithoutDuplicates);
 
         for (String serial : serials) {
-            listWithoutDuplicates.add(serial);
+            serialsWithoutDuplicates.add(serial);
         }
-        List<String> result = new ArrayList<>(listWithoutDuplicates);
-        return result;  
+
+        return result;
     }
 }
