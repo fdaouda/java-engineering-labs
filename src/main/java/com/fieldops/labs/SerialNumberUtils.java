@@ -8,11 +8,12 @@ class SerialNumberUtils {
 
     public static List<String> removeDuplicates(List<String> serials) {
         Set<String> serialsWithoutDuplicates = new LinkedHashSet<>();
-        List<String> result = List.copyOf(serialsWithoutDuplicates);
 
         for (String serial : serials) {
             serialsWithoutDuplicates.add(serial);
         }
+
+        List<String> result = List.copyOf(serialsWithoutDuplicates);
 
         return result;
     }
