@@ -17,4 +17,20 @@ class SerialNumberUtils {
 
         return result;
     }
+
+    public static List<String> findNewSerials(
+            List<String> importedSerials,
+            List<String> registeredSerials) {
+
+        Set<String> newSerialsWithoutDuplicates = new LinkedHashSet<>();
+
+        for (String serial : importedSerials) {
+            if (!registeredSerials.contains(serial)) {
+                newSerialsWithoutDuplicates.add(serial);
+            }
+        }
+
+        return List.copyOf(newSerialsWithoutDuplicates);
+
+    }
 }
