@@ -74,4 +74,63 @@ class SerialNumberUtilsTest {
         assertEquals(expected, serialsWithoutDuplicates);
     }
 
+    /*
+     * Critères d'acceptation
+     * Exclure les numéros de série déjà enregistrés.
+     * 
+     * Ne retourner aucun doublon.
+     * 
+     * Conserver l'ordre de première apparition des numéros importés.
+     * 
+     * Ne pas modifier les listes reçues en paramètres.
+     */
+
+    @Test
+    void shouldReturnImportedSerialsWhitoutDuplicatesAndWithoutRegisteredSerials() {
+        List<String> importedSerials = List.of("EQ-005", "EQ-001", "EQ-002", "EQ-007", "EQ-001");
+        List<String> registeredSerials = List.of("EQ-003", "EQ-004", "EQ-002", "EQ-007");
+
+        List<String> result = SerialNumberUtils.findNewSerials(importedSerials, registeredSerials);
+        List<String> expected = List.of("EQ-005", "EQ-001");
+
+        assertEquals(expected, result);
+
+    }
+
+    @Test
+    void shouldReturnEmptyList() {
+        List<String> importedSerials = List.of("EQ-005", "EQ-001", "EQ-002", "EQ-007", "EQ-001");
+        List<String> registeredSerials = List.of("EQ-005", "EQ-001", "EQ-002", "EQ-007", "EQ-001");
+
+        List<String> result = SerialNumberUtils.findNewSerials(importedSerials, registeredSerials);
+        List<String> expected = List.of();
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void shouldKeepOrderWithoutDuplicates() {
+        List<String> importedSerials = List.of("EQ-005", "EQ-001", "EQ-002", "EQ-007", "EQ-001");
+        List<String> registeredSerials = List.of();
+
+        List<String> result = SerialNumberUtils.findNewSerials(importedSerials, registeredSerials);
+        List<String> expected = List.of("EQ-005", "EQ-001", "EQ-002", "EQ-007");
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void shouldNotModifyInputLists() {
+        List<String> importedSerials = List.of("EQ-005", "EQ-001", "EQ-002", "EQ-007");
+        List<String> registeredSerials = List.of("EQ-0001", "EQ-0004", "EQ-0002", "EQ-0007");
+
+        SerialNumberUtils.findNewSerials(importedSerials, registeredSerials);
+
+        List<String> expectedImportedSerials = List.of("EQ-005", "EQ-001", "EQ-002", "EQ-007");
+        List<String> expectedRegisteredSerials = List.of("EQ-0001", "EQ-0004", "EQ-0002", "EQ-0007");
+
+        assertEquals(expectedImportedSerials, importedSerials);
+        assertEquals(expectedRegisteredSerials, registeredSerials);
+    }
+
 }
