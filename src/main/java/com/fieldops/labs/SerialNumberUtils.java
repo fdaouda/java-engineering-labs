@@ -1,5 +1,6 @@
 package com.fieldops.labs;
 
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,9 +24,10 @@ class SerialNumberUtils {
             List<String> registeredSerials) {
 
         Set<String> newSerialsWithoutDuplicates = new LinkedHashSet<>();
+        Set<String> registeredSerialsSet = new HashSet<>(registeredSerials);
 
         for (String serial : importedSerials) {
-            if (!registeredSerials.contains(serial)) {
+            if (!registeredSerialsSet.contains(serial)) {
                 newSerialsWithoutDuplicates.add(serial);
             }
         }
