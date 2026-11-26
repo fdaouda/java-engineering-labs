@@ -2,6 +2,8 @@ package com.fieldops.labs;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -121,16 +123,37 @@ class SerialNumberUtilsTest {
 
     @Test
     void shouldNotModifyInputLists() {
-        List<String> importedSerials = List.of("EQ-005", "EQ-001", "EQ-002", "EQ-007");
-        List<String> registeredSerials = List.of("EQ-0001", "EQ-0004", "EQ-0002", "EQ-0007");
+        List<String> importedSerials = new ArrayList<>(
+                List.of("EQ-005", "EQ-001", "EQ-002", "EQ-007", "EQ-001", "EQ-004",
+                        "EQ-001"));
+        List<String> registeredSerials = new ArrayList<>(
+                List.of("EQ-0001", "EQ-0004", "EQ-0002", "EQ-0007", "EQ-002", "EQ-007"));
 
         SerialNumberUtils.findNewSerials(importedSerials, registeredSerials);
 
-        List<String> expectedImportedSerials = List.of("EQ-005", "EQ-001", "EQ-002", "EQ-007");
-        List<String> expectedRegisteredSerials = List.of("EQ-0001", "EQ-0004", "EQ-0002", "EQ-0007");
+        List<String> expectedImportedSerials = List.of("EQ-005", "EQ-001", "EQ-002", "EQ-007", "EQ-001", "EQ-004",
+                "EQ-001");
+        List<String> expectedRegisteredSerials = List.of("EQ-0001", "EQ-0004", "EQ-0002", "EQ-0007", "EQ-002",
+                "EQ-007");
 
         assertEquals(expectedImportedSerials, importedSerials);
         assertEquals(expectedRegisteredSerials, registeredSerials);
+    }
+
+    @Test
+    void shouldKeepImportedSerialsEmptyAndNotModifyRegisteredSerials() {
+        List<String> registeredSerials = Arrays.asList("EQ-005", "EQ-001", "EQ-002", "EQ-007", "EQ-001");
+        List<String> importedSerials = Arrays.asList();
+
+        List<String> result = SerialNumberUtils.findNewSerials(importedSerials, registeredSerials);
+
+        List<String> expectedImportedSerials = List.of();
+        List<String> expectedRegisteredSerials = List.of("EQ-005", "EQ-001", "EQ-002", "EQ-007", "EQ-001");
+        List<String> expectedMethodResult = List.of();
+
+        assertEquals(expectedImportedSerials, importedSerials);
+        assertEquals(expectedRegisteredSerials, registeredSerials);
+        assertEquals(expectedMethodResult, result);
     }
 
 }
